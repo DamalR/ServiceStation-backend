@@ -19,9 +19,6 @@ public class Employer implements Serializable {
     private long employerId;
     @Getter
     @Setter
-    private String employeeType;
-    @Getter
-    @Setter
     private String fullName;
     @Getter
     @Setter

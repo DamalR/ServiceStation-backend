@@ -4,6 +4,7 @@ import lk.damal.hdrservice.dto.EmployerDTO;
 import lk.damal.hdrservice.dto.ResponseDTO;
 import lk.damal.hdrservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
