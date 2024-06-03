@@ -9,6 +9,7 @@ import lk.damal.hdrservice.repository.RoleRepository;
 import lk.damal.hdrservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployerRepository employerRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public ResponseDTO newEmployer(EmployerDTO employerDTO) {
@@ -91,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         employer.setNic(employerDTO.getNic());
                         employer.setAddress(employerDTO.getAddress());
                         employer.setUsername(employerDTO.getUsername());
-                        employer.setPassword(employerDTO.getPassword());
+                        employer.setPassword(passwordEncoder.encode(employerDTO.getPassword()));
 
                         employerRepository.save(employer);
 
