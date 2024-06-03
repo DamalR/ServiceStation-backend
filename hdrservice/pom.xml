@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>lk.damal</groupId>
-	<artifactId>hdrservice</artifactId>
+	<artifactId>ServiceStation-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hdrservice</name>
 	<description>A Service center management system Java based RESTfull API web backend. </description>
