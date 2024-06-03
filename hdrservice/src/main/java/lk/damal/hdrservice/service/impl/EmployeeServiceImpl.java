@@ -17,6 +17,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployerRepository employerRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -43,6 +44,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                         false,
                         "Telephone Number cannot be empty!"
                 );
+            } else if (telephoneNumber.length() != 10) {
+                return new ResponseDTO(
+                        false,
+                        "Invalid Telephone Number!"
+                );
             } else if (fullName.equalsIgnoreCase("")) {
                 return new ResponseDTO(
                         false,
@@ -52,6 +58,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 return new ResponseDTO(
                         false,
                         "NIC cannot be empty!"
+                );
+            } else if (nic.length() != 10) {
+                return new ResponseDTO(
+                        false,
+                        "Invalid NIC number"
                 );
             } else if (address.equalsIgnoreCase("")) {
                 return new ResponseDTO(

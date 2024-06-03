@@ -30,5 +30,8 @@ public class CustomerDTO {
     @Getter
     @Setter
     private List<Vehicle> vehicles = new ArrayList<>();
+    @Getter
+    @Setter
+    private long serviceId;
 
 }

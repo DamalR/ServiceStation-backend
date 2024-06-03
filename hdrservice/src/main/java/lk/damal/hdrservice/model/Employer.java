@@ -40,4 +40,9 @@ public class Employer implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "roleId", nullable = false)
     private Role role;
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Service service;
 }

@@ -37,4 +37,9 @@ public class Vehicle implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Service service;
 }

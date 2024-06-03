@@ -30,5 +30,8 @@ public class VehicleDTO {
     @Getter
     @Setter
     private Customer customer;
+    @Getter
+    @Setter
+    private long serviceId;
 
 }

@@ -6,39 +6,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer implements Serializable {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private long customerId;
+    private long appointmentId;
     @Getter
     @Setter
-    private String firstName;
+    private String vehicleNumber;
     @Getter
     @Setter
-    private String lastName;
+    private String date;
     @Getter
     @Setter
-    private String email;
+    private String time;
     @Getter
     @Setter
-    private String phone;
+    private String customerName;
     @Getter
     @Setter
-    @OneToMany(mappedBy = "customer")
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private String customerTelephone;
     @Getter
     @Setter
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Service service;
-
 }

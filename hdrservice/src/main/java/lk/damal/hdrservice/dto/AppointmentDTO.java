@@ -5,33 +5,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-public class EmployerDTO {
+@NoArgsConstructor@AllArgsConstructor
+public class AppointmentDTO {
     @Getter
     @Setter
-    private long employerId;
+    private long appointmentId;
     @Getter
     @Setter
-    private String fullName;
+    private String vehicleNumber;
     @Getter
     @Setter
-    private String telephoneNumber;
+    private String date;
     @Getter
     @Setter
-    private String nic;
+    private String time;
     @Getter
     @Setter
-    private String address;
+    private String customerName;
     @Getter
     @Setter
-    private String username;
-    @Getter
-    @Setter
-    private String password;
-    @Getter
-    @Setter
-    private long roleId;
+    private String customerTelephone;
     @Getter
     @Setter
     private long serviceId;
