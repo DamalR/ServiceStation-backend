@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.internal.build.AllowNonPortable;
 
 import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
+@AllowNonPortable
 public class Employer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

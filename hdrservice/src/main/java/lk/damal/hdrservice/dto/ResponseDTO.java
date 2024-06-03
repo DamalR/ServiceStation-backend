@@ -1,10 +1,12 @@
 package lk.damal.hdrservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 public class ResponseDTO {
     @Getter
     @Setter
@@ -19,11 +21,5 @@ public class ResponseDTO {
     public ResponseDTO(boolean success, String message) {
         this.success = success;
         this.message = message;
-    }
-
-    public ResponseDTO(boolean success, String message, Object data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
     }
 }

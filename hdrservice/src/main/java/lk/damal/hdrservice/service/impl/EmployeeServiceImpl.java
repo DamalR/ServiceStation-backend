@@ -8,6 +8,7 @@ import lk.damal.hdrservice.repository.EmployerRepository;
 import lk.damal.hdrservice.repository.RoleRepository;
 import lk.damal.hdrservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -96,6 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
                         EmployerDTO savedEmployer = new EmployerDTO();
 
+                        savedEmployer.setEmployerId(employer.getEmployerId());
                         savedEmployer.setRoleId(employer.getRole().getRoleId());
                         savedEmployer.setFullName(employer.getFullName());
                         savedEmployer.setTelephoneNumber(employer.getTelephoneNumber());
