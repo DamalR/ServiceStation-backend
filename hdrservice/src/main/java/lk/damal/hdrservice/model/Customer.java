@@ -27,11 +27,11 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer")
-    private List<Vehicle> vehicles = new ArrayList<>();
-
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Service service;
+//    @OneToMany(mappedBy = "customer")
+//    private List<Vehicle> vehicles = new ArrayList<>();
+//
+//    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    private Service service;
 
 }

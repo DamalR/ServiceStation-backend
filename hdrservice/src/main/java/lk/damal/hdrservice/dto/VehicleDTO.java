@@ -11,13 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleDTO {
-    private long vehicleNumber;
+    private Long vehicleId;
+    private String vehicleNumber;
     private String manufacture;
     private String vehicleType;
     private String model;
     private String color;
     private String damages;
-    private Customer customer;
-    private long serviceId;
-
 }

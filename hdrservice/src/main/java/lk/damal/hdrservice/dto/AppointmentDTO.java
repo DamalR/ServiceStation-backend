@@ -11,10 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AppointmentDTO {
     private long appointmentId;
-    private String vehicleNumber;
     private String date;
     private String time;
     private String customerName;
     private String telephoneNumber;
+    private String vehicleNumber;
+    private String manufacturer;
+    private String vehicleType;
     private Long customerId;
+    private Long vehicleId;
 }

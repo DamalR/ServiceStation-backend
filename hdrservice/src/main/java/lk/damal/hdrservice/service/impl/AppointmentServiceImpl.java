@@ -3,12 +3,16 @@ package lk.damal.hdrservice.service.impl;
 import lk.damal.hdrservice.dto.AppointmentDTO;
 import lk.damal.hdrservice.dto.CustomerDTO;
 import lk.damal.hdrservice.dto.ResponseDTO;
+import lk.damal.hdrservice.dto.VehicleDTO;
 import lk.damal.hdrservice.model.Appointment;
 import lk.damal.hdrservice.model.Customer;
+import lk.damal.hdrservice.model.Vehicle;
 import lk.damal.hdrservice.repository.AppointmentRepository;
 import lk.damal.hdrservice.repository.CustomerRepository;
+import lk.damal.hdrservice.repository.VehicleRepository;
 import lk.damal.hdrservice.service.AppointmentService;
 import lk.damal.hdrservice.service.CustomerService;
+import lk.damal.hdrservice.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,22 +31,25 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private VehicleService vehicleService;
+
     @Override
     @Transactional
     public ResponseDTO newAppointment(AppointmentDTO appointmentDTO) {
-        String vehicleNumber = appointmentDTO.getVehicleNumber();
+
         String date = appointmentDTO.getDate();
         String time = appointmentDTO.getTime();
         String customerName = appointmentDTO.getCustomerName();
         String telephoneNumber = appointmentDTO.getTelephoneNumber();
+        String vehicleNumber = appointmentDTO.getVehicleNumber();
+        String manufacturer = appointmentDTO.getManufacturer();
+        String vehicleType = appointmentDTO.getVehicleType();
 
-        LocalDate currentDate = LocalDate.now();
-        String dateString = currentDate.toString(); //2024-06-04
-
-        Appointment appointmentByVehicleNumberAndDate = appointmentRepository.findAppointmentByVehicleNumberAndDate(vehicleNumber, dateString);
-        System.out.println(appointmentByVehicleNumberAndDate);
-
-        if (customerName.equalsIgnoreCase("")){
+        if (customerName.equalsIgnoreCase("")) {
             return new ResponseDTO(
                     false,
                     "Customer name cannot be empty!"
@@ -79,55 +86,65 @@ public class AppointmentServiceImpl implements AppointmentService {
                     "Time cannot be empty!"
             );
         } else {
-            if (appointmentByVehicleNumberAndDate == null) {
-                try {
-                    CustomerDTO customerDTO = new CustomerDTO();
+            try {
+//                    customer transaction.
+                CustomerDTO customerDTO = new CustomerDTO();
 
-                    customerDTO.setFullName(customerName);
-                    customerDTO.setTelephoneNumber(telephoneNumber);
+                customerDTO.setFullName(customerName);
+                customerDTO.setTelephoneNumber(telephoneNumber);
 
-                    ResponseDTO responseDTO = customerService.newCustomer(customerDTO);
-                    Object data = responseDTO.getData();
+                ResponseDTO customerResponseDTO = customerService.newCustomer(customerDTO);
+                Object customerData = customerResponseDTO.getData();
 
-                    Optional<Customer> repositoryById = customerRepository.findById(Long.parseLong(data.toString()));
-                    Customer customer = repositoryById.get();
+                Optional<Customer> customerRepositoryById = customerRepository.findById(Long.parseLong(customerData.toString()));
+                Customer customer = customerRepositoryById.get();
 
-                    Appointment appointment = new Appointment();
+//                    vehicle transaction
+                VehicleDTO vehicleDTO = new VehicleDTO();
 
-                    appointment.setVehicleNumber(vehicleNumber);
-                    appointment.setDate(date);
-                    appointment.setTime(time);
-                    appointment.setCustomer(customer);
+                vehicleDTO.setVehicleNumber(vehicleNumber);
+                vehicleDTO.setManufacture(manufacturer);
+                vehicleDTO.setVehicleType(vehicleType);
 
-                    appointmentRepository.save(appointment);
+                ResponseDTO vehicleResponseDTO = vehicleService.newVehicle(vehicleDTO);
+                Object vehicleData = vehicleResponseDTO.getData();
 
-                    AppointmentDTO savedAppointment = new AppointmentDTO();
+                Optional<Vehicle> vehicleRepositoryById = vehicleRepository.findById(Long.parseLong(vehicleData.toString()));
+                Vehicle vehicle = vehicleRepositoryById.get();
 
-                    savedAppointment.setAppointmentId(appointment.getAppointmentId());
-                    savedAppointment.setVehicleNumber(appointment.getVehicleNumber());
-                    savedAppointment.setCustomerName(appointment.getCustomer().getFullName());
-                    savedAppointment.setTelephoneNumber(appointment.getCustomer().getTelephoneNumber());
-                    savedAppointment.setCustomerId(appointment.getCustomer().getCustomerId());
-                    savedAppointment.setDate(appointment.getDate());
-                    savedAppointment.setTime(appointment.getTime());
+//                    appointment transaction
+                Appointment appointment = new Appointment();
 
-                    return new ResponseDTO(
-                            true,
-                            vehicleNumber + " appointment has placed!",
-                            savedAppointment
-                    );
+                appointment.setDate(date);
+                appointment.setTime(time);
+                appointment.setVehicle(vehicle);
+                appointment.setCustomer(customer);
 
-                } catch (Exception exception) {
-                    return new ResponseDTO(
-                            false,
-                            "Cannot make this appointment",
-                            exception
-                    );
-                }
-            } else {
+                appointmentRepository.save(appointment);
+
+                AppointmentDTO savedAppointment = new AppointmentDTO();
+
+                savedAppointment.setAppointmentId(appointment.getAppointmentId());
+                savedAppointment.setDate(appointment.getDate());
+                savedAppointment.setTime(appointment.getTime());
+                savedAppointment.setCustomerName(appointment.getCustomer().getFullName());
+                savedAppointment.setTelephoneNumber(appointment.getCustomer().getTelephoneNumber());
+                savedAppointment.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
+                savedAppointment.setManufacturer(appointment.getVehicle().getManufacture());
+                savedAppointment.setVehicleType(appointment.getVehicle().getVehicleType());
+                savedAppointment.setCustomerId(appointment.getCustomer().getCustomerId());
+                savedAppointment.setVehicleId(appointment.getVehicle().getVehicleId());
+
+                return new ResponseDTO(
+                        true,
+                        vehicleNumber + " appointment has placed!",
+                        savedAppointment
+                );
+            } catch (Exception exception) {
                 return new ResponseDTO(
                         false,
-                        vehicleNumber + " Vehicle already has an appointment!"
+                        "Cannot make this appointment",
+                        exception
                 );
             }
         }
