@@ -11,17 +11,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
     private String role;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "role")
-    private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employer> employers = new ArrayList<>();
 }

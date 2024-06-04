@@ -8,11 +8,11 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

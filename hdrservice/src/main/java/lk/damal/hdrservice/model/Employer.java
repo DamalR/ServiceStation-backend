@@ -8,11 +8,11 @@ import org.hibernate.internal.build.AllowNonPortable;
 
 import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllowNonPortable
+@Entity
 public class Employer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,11 @@ public class Employer implements Serializable {
     private String address;
     private String username;
     private String password;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "roleId", nullable = false)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "roleId")
     private Role role;
+
     @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Service service;

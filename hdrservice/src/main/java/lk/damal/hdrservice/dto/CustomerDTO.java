@@ -16,8 +16,6 @@ import java.util.List;
 public class CustomerDTO {
     private long customerId;
     private String fullName;
-    private String phone;
-    private List<Vehicle> vehicles = new ArrayList<>();
-    private long serviceId;
+    private String telephoneNumber;
 
 }

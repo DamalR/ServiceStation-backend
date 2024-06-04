@@ -16,5 +16,4 @@ import java.util.List;
 public class RoleDTO {
     private Long roleId;
     private String role;
-    private List<Role> roles = new ArrayList<>();
 }

@@ -17,6 +17,5 @@ public class EmployerDTO {
     private String address;
     private String username;
     private String password;
-    private long roleId;
-    private long serviceId;
+    private Long roleId;
 }
