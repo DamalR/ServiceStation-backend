@@ -20,28 +20,38 @@ public class CustomerServiceImpl implements CustomerService {
         String telephoneNumber = customerDTO.getTelephoneNumber();
 
         try {
-            if (fullName.equalsIgnoreCase("")) {
-                return new ResponseDTO(
-                        false,
-                        "Customer name cannot be empty!"
-                );
-            } else if (telephoneNumber.equalsIgnoreCase("")) {
-                return new ResponseDTO(
-                        false,
-                        "Customer telephone number cannot be empty!"
-                );
+            Customer filteredCustomer = customerRepository.findByTelephoneNumberAndFullName(telephoneNumber, fullName);
+
+            if (filteredCustomer == null) {
+                if (fullName.equalsIgnoreCase("")) {
+                    return new ResponseDTO(
+                            false,
+                            "Customer name cannot be empty!"
+                    );
+                } else if (telephoneNumber.equalsIgnoreCase("")) {
+                    return new ResponseDTO(
+                            false,
+                            "Customer telephone number cannot be empty!"
+                    );
+                } else {
+                    Customer customer = new Customer();
+
+                    customer.setFullName(fullName);
+                    customer.setTelephoneNumber(telephoneNumber);
+
+                    Customer save = customerRepository.save(customer);
+
+                    return new ResponseDTO(
+                            true,
+                            "Customer successfully created!",
+                            save.getCustomerId()
+                    );
+                }
             } else {
-                Customer customer = new Customer();
-
-                customer.setFullName(fullName);
-                customer.setTelephoneNumber(telephoneNumber);
-
-                Customer save = customerRepository.save(customer);
-
                 return new ResponseDTO(
                         true,
-                        "Customer successfully created!",
-                        save.getCustomerId()
+                        fullName + " is a existing customer!",
+                        filteredCustomer.getCustomerId()
                 );
             }
         } catch (Exception exception) {

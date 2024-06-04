@@ -16,8 +16,6 @@ import lk.damal.hdrservice.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -141,11 +139,12 @@ public class AppointmentServiceImpl implements AppointmentService {
                         savedAppointment
                 );
             } catch (Exception exception) {
-                return new ResponseDTO(
-                        false,
-                        "Cannot make this appointment",
-                        exception
-                );
+                throw exception;
+//                return new ResponseDTO(
+//                        false,
+//                        "Cannot make this appointment",
+//                        exception
+//                );
             }
         }
     }
