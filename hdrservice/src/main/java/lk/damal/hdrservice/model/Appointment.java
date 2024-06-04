@@ -28,7 +28,7 @@ public class Appointment implements Serializable {
     @JoinColumn(name = "vehicleId", nullable = false)
     private Vehicle vehicle;
 
-//    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Service service;
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Service service;
 }

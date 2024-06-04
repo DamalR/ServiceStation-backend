@@ -1,5 +1,6 @@
 package lk.damal.hdrservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,17 +22,20 @@ public class Service implements Serializable {
     private long serviceId;
     private String startedTime;
     private String finishedTime;
-    private double serviceCharge;
+    private double additionalCharges;
+    private String status;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId")
+    private Category category;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "appointmentId")
     private Appointment appointment;
-    @OneToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "employerId")
     private Employer employer;
-    @OneToOne
-    @JoinColumn(name = "vehicleNumber")
-    private Vehicle vehicle;
 }
