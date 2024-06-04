@@ -40,11 +40,22 @@ public class AppointmentServiceImpl implements AppointmentService {
                     false,
                     "Vehicle number cannot be empty!"
             );
+        } else if (vehicleNumber.length() < 6 || vehicleNumber.length() > 8) {
+            return new ResponseDTO(
+                    false,
+                    "Invalid vehicle number"
+            );
         } else if (customerTelephone.equalsIgnoreCase("")) {
             return new ResponseDTO(
                     false,
                     "Telephone number cannot be empty!"
             );
+        } else if (customerTelephone.length() != 10) {
+            return new ResponseDTO(
+                    false,
+                    "Invalid telephone number"
+            );
+
         } else if (date.equalsIgnoreCase("")) {
             return new ResponseDTO(
                     false,

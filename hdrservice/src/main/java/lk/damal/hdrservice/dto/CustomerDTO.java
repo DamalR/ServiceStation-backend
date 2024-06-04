@@ -9,29 +9,15 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDTO {
-    @Getter
-    @Setter
     private long customerId;
-    @Getter
-    @Setter
-    private String firstName;
-    @Getter
-    @Setter
-    private String lastName;
-    @Getter
-    @Setter
-    private String email;
-    @Getter
-    @Setter
+    private String fullName;
     private String phone;
-    @Getter
-    @Setter
     private List<Vehicle> vehicles = new ArrayList<>();
-    @Getter
-    @Setter
     private long serviceId;
 
 }

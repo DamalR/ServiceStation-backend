@@ -11,32 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private long customerId;
-    @Getter
-    @Setter
-    private String firstName;
-    @Getter
-    @Setter
-    private String lastName;
-    @Getter
-    @Setter
-    private String email;
-    @Getter
-    @Setter
-    private String phone;
-    @Getter
-    @Setter
+    private String fullName;
+    private String telephoneNumber;
     @OneToMany(mappedBy = "customer")
     private List<Vehicle> vehicles = new ArrayList<>();
-    @Getter
-    @Setter
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Service service;

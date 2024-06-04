@@ -9,16 +9,12 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDTO {
-    @Getter
-    @Setter
     private Long roleId;
-    @Getter
-    @Setter
     private String role;
-    @Getter
-    @Setter
     private List<Role> roles = new ArrayList<>();
 }

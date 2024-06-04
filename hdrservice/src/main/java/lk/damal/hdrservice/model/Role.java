@@ -12,19 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long roleId;
-    @Getter
-    @Setter
     private String role;
-    @Getter
-    @Setter
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Role> roles = new ArrayList<>();
