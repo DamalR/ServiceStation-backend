@@ -13,6 +13,7 @@ public class AppointmentDTO {
     private long appointmentId;
     private String date;
     private String time;
+    private String status;
     private String customerName;
     private String telephoneNumber;
     private String vehicleNumber;

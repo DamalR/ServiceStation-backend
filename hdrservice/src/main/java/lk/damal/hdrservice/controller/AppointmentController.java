@@ -21,4 +21,9 @@ public class AppointmentController {
     public ResponseDTO cancelAppointment(@RequestParam("appointmentId") Long appointmentId) {
         return appointmentService.cancelAppointment(appointmentId);
     }
+
+    @GetMapping("/appointments")
+    public ResponseDTO allAppointments() {
+        return appointmentService.getAllAppointments();
+    }
 }

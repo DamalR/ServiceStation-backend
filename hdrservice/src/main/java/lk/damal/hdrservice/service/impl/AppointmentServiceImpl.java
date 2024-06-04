@@ -16,6 +16,9 @@ import lk.damal.hdrservice.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +49,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         String vehicleNumber = appointmentDTO.getVehicleNumber();
         String manufacturer = appointmentDTO.getManufacturer();
         String vehicleType = appointmentDTO.getVehicleType();
+        String status = appointmentDTO.getStatus();
 
         if (customerName.equalsIgnoreCase("")) {
             return new ResponseDTO(
@@ -83,6 +87,11 @@ public class AppointmentServiceImpl implements AppointmentService {
                     false,
                     "Time cannot be empty!"
             );
+        } else if (!status.equalsIgnoreCase("pending")) {
+            return new ResponseDTO(
+                    false,
+                    "this is not a new appointment"
+            );
         } else {
             try {
 //                    customer transaction.
@@ -115,6 +124,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
                 appointment.setDate(date);
                 appointment.setTime(time);
+                appointment.setStatus(status);
                 appointment.setVehicle(vehicle);
                 appointment.setCustomer(customer);
 
@@ -127,6 +137,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 savedAppointment.setTime(appointment.getTime());
                 savedAppointment.setCustomerName(appointment.getCustomer().getFullName());
                 savedAppointment.setTelephoneNumber(appointment.getCustomer().getTelephoneNumber());
+                savedAppointment.setStatus(appointment.getStatus());
                 savedAppointment.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
                 savedAppointment.setManufacturer(appointment.getVehicle().getManufacture());
                 savedAppointment.setVehicleType(appointment.getVehicle().getVehicleType());
@@ -139,12 +150,11 @@ public class AppointmentServiceImpl implements AppointmentService {
                         savedAppointment
                 );
             } catch (Exception exception) {
-                throw exception;
-//                return new ResponseDTO(
-//                        false,
-//                        "Cannot make this appointment",
-//                        exception
-//                );
+                return new ResponseDTO(
+                        false,
+                        "Cannot make this appointment",
+                        exception
+                );
             }
         }
     }
@@ -171,14 +181,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                     appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
                     appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
 
-                    appointmentRepository.delete(appointment);
+                    if (repositoryById.get().getStatus().equalsIgnoreCase("pending")) {
+                        appointmentRepository.delete(appointment);
 
-                    return new ResponseDTO(
-                            true,
-                            "Appointment has deleted!",
-                            appointmentDTO
-                    );
-
+                        return new ResponseDTO(
+                                true,
+                                "Appointment has deleted!",
+                                appointmentDTO
+                        );
+                    } else {
+                        return new ResponseDTO(
+                                false,
+                                "Cannot remove, appointment is ongoing stage!"
+                        );                    }
                 } catch (Exception exception) {
                     return new ResponseDTO(
                             false,
@@ -197,6 +212,42 @@ public class AppointmentServiceImpl implements AppointmentService {
                     false,
                     "Something wens wrong, please try again",
                     exception
+            );
+        }
+    }
+
+    @Override
+    public ResponseDTO getAllAppointments() {
+        List<Appointment> appointmentList = appointmentRepository.findAll();
+
+        if (appointmentList.isEmpty()) {
+            return new ResponseDTO(
+                    false,
+                    "Cannot found any appointment!"
+            );
+        } else {
+            ArrayList<AppointmentDTO> appointments = new ArrayList<>();
+
+            for (Appointment appointment : appointmentList) {
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+
+                appointmentDTO.setAppointmentId(appointment.getAppointmentId());
+                appointmentDTO.setDate(appointment.getDate());
+                appointmentDTO.setTime(appointment.getTime());
+                appointmentDTO.setCustomerName(appointment.getCustomer().getFullName());
+                appointmentDTO.setTelephoneNumber(appointment.getCustomer().getTelephoneNumber());
+                appointmentDTO.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
+                appointmentDTO.setManufacturer(appointment.getVehicle().getManufacture());
+                appointmentDTO.setVehicleType(appointment.getVehicle().getVehicleType());
+                appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
+                appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
+
+                appointments.add(appointmentDTO);
+            }
+            return new ResponseDTO(
+                    true,
+                    "Fetched te all appointments",
+                    appointments
             );
         }
     }

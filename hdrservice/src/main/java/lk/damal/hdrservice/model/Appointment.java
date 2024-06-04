@@ -19,6 +19,7 @@ public class Appointment implements Serializable {
     private long appointmentId;
     private String date;
     private String time;
+    private String status;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId", nullable = false)
