@@ -148,4 +148,56 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
         }
     }
+
+    @Override
+    public ResponseDTO cancelAppointment(Long appointmentId) {
+        try {
+            Optional<Appointment> repositoryById = appointmentRepository.findById(appointmentId);
+
+            if (repositoryById.isPresent()) {
+                try {
+                    Appointment appointment = repositoryById.get();
+
+                    AppointmentDTO appointmentDTO = new AppointmentDTO();
+
+                    appointmentDTO.setAppointmentId(appointment.getAppointmentId());
+                    appointmentDTO.setDate(appointment.getDate());
+                    appointmentDTO.setTime(appointment.getTime());
+                    appointmentDTO.setCustomerName(appointment.getCustomer().getFullName());
+                    appointmentDTO.setTelephoneNumber(appointment.getCustomer().getTelephoneNumber());
+                    appointmentDTO.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
+                    appointmentDTO.setManufacturer(appointment.getVehicle().getManufacture());
+                    appointmentDTO.setVehicleType(appointment.getVehicle().getVehicleType());
+                    appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
+                    appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
+
+                    appointmentRepository.delete(appointment);
+
+                    return new ResponseDTO(
+                            true,
+                            "Appointment has deleted!",
+                            appointmentDTO
+                    );
+
+                } catch (Exception exception) {
+                    return new ResponseDTO(
+                            false,
+                            "Can not cansel this appointment!"
+                    );
+                }
+            } else {
+                return new ResponseDTO(
+                        false,
+                        "Can not find the appointment!"
+                );
+            }
+
+        } catch (Exception exception) {
+            return new ResponseDTO(
+                    false,
+                    "Something wens wrong, please try again",
+                    exception
+            );
+        }
+    }
 }

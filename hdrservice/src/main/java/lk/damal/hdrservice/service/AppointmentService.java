@@ -5,4 +5,5 @@ import lk.damal.hdrservice.dto.ResponseDTO;
 
 public interface AppointmentService {
     public ResponseDTO newAppointment(AppointmentDTO appointmentDTO);
+    public ResponseDTO cancelAppointment(Long appointmentId);
 }
