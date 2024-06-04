@@ -122,10 +122,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                         );
 
                     }
-                } catch (Exception e) {
+                } catch (Exception exception) {
                     return new ResponseDTO(
                             false,
-                            "Employer Adding Failure!"
+                            "Employer Adding Failure!",
+                            exception
                     );
                 }
             }

@@ -28,4 +28,12 @@ public class AppointmentDTO {
     @Getter
     @Setter
     private long serviceId;
+
+    public AppointmentDTO(String vehicleNumber, String date, String time, String customerName, String customerTelephone) {
+        this.vehicleNumber = vehicleNumber;
+        this.date = date;
+        this.time = time;
+        this.customerName = customerName;
+        this.customerTelephone = customerTelephone;
+    }
 }
