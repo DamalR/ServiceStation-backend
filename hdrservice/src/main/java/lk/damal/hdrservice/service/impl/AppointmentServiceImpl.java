@@ -382,4 +382,41 @@ public class AppointmentServiceImpl implements AppointmentService {
             );
         }
     }
+
+    @Override
+    public ResponseDTO getOnGoingAppointment() {
+        List<Appointment> onGoingAppointments = appointmentRepository.findAppointmentsByStatus("OnGoing");
+
+        if (onGoingAppointments.isEmpty()) {
+            return new ResponseDTO(
+                    false,
+                    "OnGoing appointment not found!"
+            );
+        } else {
+            ArrayList<AppointmentDTO> appointmentList = new ArrayList<>();
+
+            for (Appointment appointment : onGoingAppointments) {
+
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+
+                appointmentDTO.setAppointmentId(appointment.getAppointmentId());
+                appointmentDTO.setDate(appointment.getDate());
+                appointmentDTO.setTime(appointment.getTime());
+                appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
+                appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
+                appointmentDTO.setVehicleType(appointment.getVehicle().getVehicleType());
+                appointmentDTO.setCustomerName(appointment.getCustomer().getFullName());
+                appointmentDTO.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
+                appointmentDTO.setManufacturer(appointment.getVehicle().getManufacture());
+                appointmentDTO.setStatus(appointment.getStatus());
+
+                appointmentList.add(appointmentDTO);
+            }
+            return new ResponseDTO(
+                    true,
+                    "All ongoing appointments are fetched!",
+                    appointmentList
+            );
+        }
+    }
 }

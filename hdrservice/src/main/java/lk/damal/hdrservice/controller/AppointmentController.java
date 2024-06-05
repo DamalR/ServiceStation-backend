@@ -31,4 +31,9 @@ public class AppointmentController {
     public ResponseDTO getPendingAppointments() {
         return appointmentService.getPendingAppointment();
     }
+
+    @GetMapping("/ongoing")
+    public ResponseDTO getOnGoingAppointments() {
+        return appointmentService.getOnGoingAppointment();
+    }
 }

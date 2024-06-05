@@ -9,4 +9,5 @@ public interface AppointmentService {
     public ResponseDTO getAllAppointments();
     public ResponseDTO updateAppointmentStatus(AppointmentDTO appointmentDTO, Long appointmentId);
     public ResponseDTO getPendingAppointment();
+    public ResponseDTO getOnGoingAppointment();
 }
