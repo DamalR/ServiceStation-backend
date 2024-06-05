@@ -58,7 +58,6 @@ public class ServiceServiceImpl implements ServiceService {
         String vehicleNumber = serviceDataDTO.getVehicleNumber();
         String vehicleType = serviceDataDTO.getVehicleType();
         String startedTime = LocalTime.now(ZoneId.of("GMT+02:30")).toString();
-        String status = serviceDataDTO.getStatus();
 
         Optional<Appointment> appointmentRepositoryById = appointmentRepository.findById(appointmentId);
         Optional<Category> categoryRepositoryById = categoryRepository.findById(categoryId);
@@ -116,11 +115,6 @@ public class ServiceServiceImpl implements ServiceService {
                 return new ResponseDTO(
                         false,
                         "Cannot find vehicle color!"
-                );
-            } else if (status.equalsIgnoreCase("")) {
-                return new ResponseDTO(
-                        false,
-                        "Cannot find appointment status!"
                 );
             } else {
 

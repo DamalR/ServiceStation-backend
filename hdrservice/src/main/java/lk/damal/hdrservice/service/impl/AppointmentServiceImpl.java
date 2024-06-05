@@ -8,7 +8,6 @@ import lk.damal.hdrservice.model.Appointment;
 import lk.damal.hdrservice.model.Customer;
 import lk.damal.hdrservice.model.Vehicle;
 import lk.damal.hdrservice.repository.AppointmentRepository;
-import lk.damal.hdrservice.repository.CategoryRepository;
 import lk.damal.hdrservice.repository.CustomerRepository;
 import lk.damal.hdrservice.repository.VehicleRepository;
 import lk.damal.hdrservice.service.AppointmentService;
@@ -18,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,14 +45,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional
     public ResponseDTO newAppointment(AppointmentDTO appointmentDTO) {
 
-        String date = appointmentDTO.getDate();
-        String time = appointmentDTO.getTime();
+        String date = LocalDate.now(ZoneId.of("GMT+02:30")).toString();
+        String time = LocalTime.now(ZoneId.of("GMT+02:30")).toString();
         String customerName = appointmentDTO.getCustomerName();
         String telephoneNumber = appointmentDTO.getTelephoneNumber();
         String vehicleNumber = appointmentDTO.getVehicleNumber();
         String manufacturer = appointmentDTO.getManufacturer();
         String vehicleType = appointmentDTO.getVehicleType();
-        String status = appointmentDTO.getStatus();
+        String status = "Pending";
 
         if (customerName.equalsIgnoreCase("")) {
             return new ResponseDTO(
@@ -184,6 +186,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                     appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
 
                     if (repositoryById.get().getStatus().equalsIgnoreCase("pending")) {
+
                         appointmentRepository.delete(appointment);
 
                         return new ResponseDTO(

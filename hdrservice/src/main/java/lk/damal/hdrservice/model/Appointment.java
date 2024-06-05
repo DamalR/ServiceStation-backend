@@ -21,11 +21,11 @@ public class Appointment implements Serializable {
     private String time;
     private String status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "vehicleId", nullable = false)
     private Vehicle vehicle;
 
