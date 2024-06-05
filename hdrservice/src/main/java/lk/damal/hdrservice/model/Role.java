@@ -23,6 +23,6 @@ public class Role implements Serializable {
     private String role;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role")
     private List<Employer> employers = new ArrayList<>();
 }

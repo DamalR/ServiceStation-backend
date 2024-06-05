@@ -29,12 +29,4 @@ public class Vehicle implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "vehicle")
     private List<Appointment> appointments = new ArrayList<>();
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "customerId", nullable = false)
-//    private Customer customer;
-//
-//    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Service service;
 }

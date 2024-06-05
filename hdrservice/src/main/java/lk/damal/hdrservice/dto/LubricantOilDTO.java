@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
-    Long categoryId;
-    String category;
-    String vehicleType;
-    double charges;
+public class LubricantOilDTO {
     private Long oilId;
+    private String brand;
+    private String viscosity;
+    private double liters;
+    private String fuelType;
+    private double price;
 }

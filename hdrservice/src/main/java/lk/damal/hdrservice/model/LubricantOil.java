@@ -16,23 +16,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Employer implements Serializable {
+public class LubricantOil implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long employerId;
-    private String fullName;
-    private String telephoneNumber;
-    private String nic;
-    private String address;
-    private String username;
-    private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "roleId")
-    private Role role;
+    private Long oilId;
+    private String brand;
+    private String viscosity;
+    private double liters;
+    private String fuelType;
+    private double price;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "employer")
-    private List<ServiceData> serviceData = new ArrayList<>();
-
+    @OneToMany(mappedBy = "lubricantOil")
+    private List<Category> categories = new ArrayList<>();
 }

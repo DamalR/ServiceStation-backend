@@ -25,6 +25,10 @@ public class Category implements Serializable {
     double charges;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
     private List<ServiceData> serviceData = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "oilId")
+    private LubricantOil lubricantOil;
 }

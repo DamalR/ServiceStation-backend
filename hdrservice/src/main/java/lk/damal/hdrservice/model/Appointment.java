@@ -29,7 +29,7 @@ public class Appointment implements Serializable {
     @JoinColumn(name = "vehicleId", nullable = false)
     private Vehicle vehicle;
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appointment")
     @PrimaryKeyJoinColumn
     private ServiceData serviceData;
 }
