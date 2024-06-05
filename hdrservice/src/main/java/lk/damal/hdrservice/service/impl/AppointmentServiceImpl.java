@@ -243,6 +243,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 appointmentDTO.setVehicleType(appointment.getVehicle().getVehicleType());
                 appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
                 appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
+                appointmentDTO.setStatus(appointment.getStatus());
 
                 appointments.add(appointmentDTO);
             }
@@ -337,6 +338,44 @@ public class AppointmentServiceImpl implements AppointmentService {
                     false,
                     "Something went wrong, Please try again",
                     exception
+            );
+        }
+    }
+
+    @Override
+    public ResponseDTO getPendingAppointment() {
+
+        List<Appointment> pendingAppointments = appointmentRepository.findAppointmentsByStatus("Pending");
+
+        if (pendingAppointments.isEmpty()) {
+            return new ResponseDTO(
+                    false,
+                    "Pending appointment not found!"
+            );
+        } else {
+            ArrayList<AppointmentDTO> appointmentList = new ArrayList<>();
+
+            for (Appointment appointment : pendingAppointments) {
+
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+
+                appointmentDTO.setAppointmentId(appointment.getAppointmentId());
+                appointmentDTO.setDate(appointment.getDate());
+                appointmentDTO.setTime(appointment.getTime());
+                appointmentDTO.setCustomerId(appointment.getCustomer().getCustomerId());
+                appointmentDTO.setVehicleId(appointment.getVehicle().getVehicleId());
+                appointmentDTO.setVehicleType(appointment.getVehicle().getVehicleType());
+                appointmentDTO.setCustomerName(appointment.getCustomer().getFullName());
+                appointmentDTO.setVehicleNumber(appointment.getVehicle().getVehicleNumber());
+                appointmentDTO.setManufacturer(appointment.getVehicle().getManufacture());
+                appointmentDTO.setStatus(appointment.getStatus());
+
+                appointmentList.add(appointmentDTO);
+            }
+            return new ResponseDTO(
+                    true,
+                    "All pending appointments are fetched!",
+                    appointmentList
             );
         }
     }

@@ -147,8 +147,7 @@ public class ServiceServiceImpl implements ServiceService {
                 vehicleDTO.setVehicleNumber(vehicleNumber);
                 vehicleDTO.setVehicleType(vehicleType);
 
-                ResponseDTO vehicleResponseDTO = vehicleService.updateAppointmentStatus(vehicleDTO, vehicleId);
-                Object vehicleData = vehicleResponseDTO.getData();
+                vehicleService.updateAppointmentStatus(vehicleDTO, vehicleId);
 
 //                service transaction
                 ServiceData serviceData = new ServiceData();
@@ -183,5 +182,10 @@ public class ServiceServiceImpl implements ServiceService {
                     "No any selected appointment!"
             );
         }
+    }
+
+    @Override
+    public ResponseDTO completeService(ServiceDataDTO serviceDataDTO) {
+        return null;
     }
 }

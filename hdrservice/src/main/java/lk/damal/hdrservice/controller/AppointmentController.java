@@ -26,4 +26,9 @@ public class AppointmentController {
     public ResponseDTO allAppointments() {
         return appointmentService.getAllAppointments();
     }
+
+    @GetMapping("/pending")
+    public ResponseDTO getPendingAppointments() {
+        return appointmentService.getPendingAppointment();
+    }
 }
