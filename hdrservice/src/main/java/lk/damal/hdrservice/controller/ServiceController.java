@@ -21,4 +21,9 @@ public class ServiceController {
     public ResponseDTO submitService(@RequestBody ServiceDataDTO serviceDataDTO, @RequestParam("serviceId") Long serviceId) {
         return serviceService.submitService(serviceDataDTO, serviceId);
     }
+
+    @PutMapping("/return")
+    public ResponseDTO returnService(@RequestBody ServiceDataDTO serviceDataDTO, @RequestParam("serviceId") Long serviceId) {
+        return serviceService.returnService(serviceDataDTO, serviceId);
+    }
 }

@@ -248,4 +248,78 @@ public class ServiceServiceImpl implements ServiceService {
             );
         }
     }
+
+    @Override
+    public ResponseDTO returnService(ServiceDataDTO serviceDataDTO, Long serviceId) {
+        long appointmentId = serviceDataDTO.getAppointmentId();
+        long categoryId = serviceDataDTO.getCategoryId();
+        long employerId = serviceDataDTO.getEmployerId();
+        String startedTime = serviceDataDTO.getStartedTime();
+
+        Optional<ServiceData> serviceById = serviceRepository.findById(serviceId);
+
+        if (serviceById.isPresent()) {
+            try {
+                if (appointmentId == 0) {
+                    return new ResponseDTO(
+                            false,
+                            "Cannot find appointment!"
+                    );
+                } else if (categoryId == 0) {
+                    return new ResponseDTO(
+                            false,
+                            "Cannot find category!"
+                    );
+                } else if (employerId == 0) {
+                    return new ResponseDTO(
+                            false,
+                            "Cannot find employer!"
+                    );
+                } else if (startedTime.equalsIgnoreCase("")) {
+                    return new ResponseDTO(
+                            false,
+                            "Cannot find started time!"
+                    );
+                } else {
+                    ServiceData serviceData = serviceById.get();
+
+                    serviceData.setAppointment(appointmentRepository.findById(appointmentId).get());
+                    serviceData.setCategory(categoryRepository.findById(categoryId).get());
+                    serviceData.setEmployer(employerRepository.findById(employerId).get());
+                    serviceData.setStartedTime(startedTime);
+                    serviceData.setFinishedTime(LocalTime.now(ZoneId.of("GMT+02:30")).toString());
+                    serviceData.setStatus("Returned");
+
+                    serviceRepository.save(serviceData);
+
+                    ServiceDataDTO updatedService = new ServiceDataDTO();
+
+                    updatedService.setServiceId(serviceData.getServiceId());
+                    updatedService.setFinishedTime(serviceData.getFinishedTime());
+                    updatedService.setStartedTime(serviceData.getStartedTime());
+                    updatedService.setStatus(serviceData.getStatus());
+                    updatedService.setAppointmentId(serviceData.getAppointment().getAppointmentId());
+                    updatedService.setCategoryId(serviceData.getCategory().getCategoryId());
+                    updatedService.setEmployerId(serviceData.getEmployer().getEmployerId());
+
+                    return new ResponseDTO(
+                            true,
+                            "Service vehicle returned!",
+                            updatedService
+                    );
+                }
+            } catch (Exception exception) {
+                return new ResponseDTO(
+                        false,
+                        "Cannot return service!",
+                        exception
+                );
+            }
+        } else {
+            return new ResponseDTO(
+                    false,
+                    "Cannot found any service record!"
+            );
+        }
+    }
 }
