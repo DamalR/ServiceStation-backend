@@ -34,4 +34,8 @@ public class ServiceData implements Serializable {
     @ManyToOne
     @JoinColumn(name = "employerId")
     private Employer employer;
+
+    @OneToOne(mappedBy = "serviceData")
+    @PrimaryKeyJoinColumn
+    private Invoice invoice;
 }

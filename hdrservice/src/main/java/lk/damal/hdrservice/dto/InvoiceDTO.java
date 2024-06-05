@@ -1,22 +1,15 @@
-package lk.damal.hdrservice.model;
+package lk.damal.hdrservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Invoice implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class InvoiceDTO {
     private Long invoiceId;
     private String invoiceNumber;
     private String customerName;
@@ -31,9 +24,5 @@ public class Invoice implements Serializable {
     private String grossAmount;
     private double discountAmount;
     private double netAmount;
-
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "serviceId")
-    private ServiceData serviceData;
+    private long serviceId;
 }
