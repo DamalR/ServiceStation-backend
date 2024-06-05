@@ -58,6 +58,7 @@ public class ServiceServiceImpl implements ServiceService {
         String vehicleNumber = serviceDataDTO.getVehicleNumber();
         String vehicleType = serviceDataDTO.getVehicleType();
         String startedTime = LocalTime.now(ZoneId.of("GMT+02:30")).toString();
+        int currentMileage = serviceDataDTO.getCurrentMileage();
 
         Optional<Appointment> appointmentRepositoryById = appointmentRepository.findById(appointmentId);
         Optional<Category> categoryRepositoryById = categoryRepository.findById(categoryId);
@@ -116,6 +117,11 @@ public class ServiceServiceImpl implements ServiceService {
                         false,
                         "Cannot find vehicle color!"
                 );
+            } else if (currentMileage == 0) {
+                return new ResponseDTO(
+                        false,
+                        "Cannot find vehicle mileage!"
+                );
             } else {
 
 //                update appointment status
@@ -137,6 +143,7 @@ public class ServiceServiceImpl implements ServiceService {
                 vehicleDTO.setModel(vehicleModel);
                 vehicleDTO.setVehicleNumber(vehicleNumber);
                 vehicleDTO.setVehicleType(vehicleType);
+                vehicleDTO.setCurrentMileage(currentMileage);
 
                 vehicleService.updateAppointmentStatus(vehicleDTO, vehicleId);
 

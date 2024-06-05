@@ -21,6 +21,7 @@ public class VehicleServiceImpl implements VehicleService {
         String vehicleNumber = vehicleDTO.getVehicleNumber();
         String manufacture = vehicleDTO.getManufacture();
         String vehicleType = vehicleDTO.getVehicleType();
+        int currentMileage = vehicleDTO.getCurrentMileage();
 
         try {
             if (vehicleNumber.equalsIgnoreCase("")) {
@@ -38,12 +39,18 @@ public class VehicleServiceImpl implements VehicleService {
                         false,
                         "Vehicle type cannot be null!"
                 );
+            } else if (currentMileage == 0) {
+                return new ResponseDTO(
+                        false,
+                        "Vehicle mileage cannot be null!"
+                );
             } else {
                 Vehicle vehicle = new Vehicle();
 
                 vehicle.setVehicleNumber(vehicleNumber);
                 vehicle.setManufacture(manufacture);
                 vehicle.setVehicleType(vehicleType);
+                vehicle.setCurrentMileage(currentMileage);
 
                 Vehicle save = vehicleRepository.save(vehicle);
 

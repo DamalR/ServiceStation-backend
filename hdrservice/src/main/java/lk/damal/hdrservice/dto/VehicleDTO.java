@@ -17,4 +17,5 @@ public class VehicleDTO {
     private String vehicleType;
     private String model;
     private String color;
+    private int currentMileage;
 }

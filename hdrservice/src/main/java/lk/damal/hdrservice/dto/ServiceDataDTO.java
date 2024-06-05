@@ -24,4 +24,5 @@ public class ServiceDataDTO {
     private long employerId;
     private long customerId;
     private long vehicleId;
+    private int currentMileage;
 }

@@ -25,6 +25,7 @@ public class Vehicle implements Serializable {
     private String vehicleType;
     private String model;
     private String color;
+    private int currentMileage;
 
     @JsonIgnore
     @OneToMany(mappedBy = "vehicle")
