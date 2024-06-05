@@ -311,7 +311,7 @@ public class ServiceServiceImpl implements ServiceService {
             } catch (Exception exception) {
                 return new ResponseDTO(
                         false,
-                        "Cannot return service!",
+                        "Cannot return service vehicle!",
                         exception
                 );
             }
