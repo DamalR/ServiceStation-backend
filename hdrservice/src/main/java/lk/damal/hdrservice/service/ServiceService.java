@@ -5,5 +5,5 @@ import lk.damal.hdrservice.dto.ServiceDataDTO;
 
 public interface ServiceService {
     public ResponseDTO takeService(ServiceDataDTO serviceDataDTO);
-    public ResponseDTO completeService(ServiceDataDTO serviceDataDTO);
+    public ResponseDTO submitService(ServiceDataDTO serviceDataDTO, Long serviceId);
 }

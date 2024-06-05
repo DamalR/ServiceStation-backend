@@ -4,10 +4,7 @@ import lk.damal.hdrservice.dto.ResponseDTO;
 import lk.damal.hdrservice.dto.ServiceDataDTO;
 import lk.damal.hdrservice.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1.0/service")
@@ -18,5 +15,10 @@ public class ServiceController {
     @PostMapping("/new")
     public ResponseDTO takeService(@RequestBody ServiceDataDTO serviceDataDTO) {
         return serviceService.takeService(serviceDataDTO);
+    }
+
+    @PutMapping("/submit")
+    public ResponseDTO submitService(@RequestBody ServiceDataDTO serviceDataDTO, @RequestParam("serviceId") Long serviceId) {
+        return serviceService.submitService(serviceDataDTO, serviceId);
     }
 }

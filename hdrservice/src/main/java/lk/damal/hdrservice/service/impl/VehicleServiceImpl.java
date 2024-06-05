@@ -65,7 +65,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public ResponseDTO updateAppointmentStatus(VehicleDTO vehicleDTO, Long vehicleId) {
         String color = vehicleDTO.getColor();
-        String damages = vehicleDTO.getDamages();
         String manufacture = vehicleDTO.getManufacture();
         String model = vehicleDTO.getModel();
         String vehicleNumber = vehicleDTO.getVehicleNumber();
@@ -106,7 +105,6 @@ public class VehicleServiceImpl implements VehicleService {
                         Vehicle vehicle = vehicleById.get();
 
                         vehicle.setColor(color);
-                        vehicle.setDamages(damages);
                         vehicle.setManufacture(manufacture);
                         vehicle.setModel(model);
                         vehicle.setVehicleNumber(vehicleNumber);
@@ -117,7 +115,6 @@ public class VehicleServiceImpl implements VehicleService {
                         VehicleDTO updatedVehicle = new VehicleDTO();
 
                         updatedVehicle.setColor(vehicle.getColor());
-                        updatedVehicle.setDamages(vehicle.getDamages());
                         updatedVehicle.setManufacture(vehicle.getManufacture());
                         updatedVehicle.setModel(vehicle.getModel());
                         updatedVehicle.setVehicleNumber(vehicle.getModel());
