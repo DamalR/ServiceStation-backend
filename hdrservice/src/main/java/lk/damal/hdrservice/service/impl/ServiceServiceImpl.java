@@ -53,11 +53,9 @@ public class ServiceServiceImpl implements ServiceService {
         String vehicleManufacture = serviceDataDTO.getVehicleManufacture();
         String vehicleModel = serviceDataDTO.getVehicleModel();
         String vehicleColor = serviceDataDTO.getVehicleColor();
-        String vehicleDamages = serviceDataDTO.getVehicleDamages();
         String vehicleNumber = serviceDataDTO.getVehicleNumber();
         String vehicleType = serviceDataDTO.getVehicleType();
         String startedTime = serviceDataDTO.getStartedTime();
-        double additionalCharges = serviceDataDTO.getAdditionalCharges();
         String status = serviceDataDTO.getStatus();
 
         Optional<Appointment> appointmentRepositoryById = appointmentRepository.findById(appointmentId);
@@ -144,7 +142,6 @@ public class ServiceServiceImpl implements ServiceService {
                 VehicleDTO vehicleDTO = new VehicleDTO();
 
                 vehicleDTO.setColor(vehicleColor);
-                vehicleDTO.setDamages(vehicleDamages);
                 vehicleDTO.setManufacture(vehicleManufacture);
                 vehicleDTO.setModel(vehicleModel);
                 vehicleDTO.setVehicleNumber(vehicleNumber);
@@ -156,7 +153,6 @@ public class ServiceServiceImpl implements ServiceService {
 //                service transaction
                 ServiceData serviceData = new ServiceData();
 
-                serviceData.setAdditionalCharges(additionalCharges);
                 serviceData.setStartedTime(startedTime);
                 serviceData.setStatus("OnGoing");
                 serviceData.setAppointment(appointmentRepositoryById.get());
@@ -168,7 +164,6 @@ public class ServiceServiceImpl implements ServiceService {
                 ServiceDataDTO savedServiceData = new ServiceDataDTO();
 
                 savedServiceData.setServiceId(serviceData.getServiceId());
-                savedServiceData.setAdditionalCharges(serviceData.getAdditionalCharges());
                 savedServiceData.setFinishedTime(serviceData.getFinishedTime());
                 savedServiceData.setStartedTime(serviceData.getStartedTime());
                 savedServiceData.setStatus(serviceData.getStatus());

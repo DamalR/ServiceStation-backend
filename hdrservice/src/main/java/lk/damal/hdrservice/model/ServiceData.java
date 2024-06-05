@@ -20,7 +20,6 @@ public class ServiceData implements Serializable {
     private long serviceId;
     private String startedTime;
     private String finishedTime;
-    private double additionalCharges;
     private String status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -32,8 +31,7 @@ public class ServiceData implements Serializable {
     @JoinColumn(name = "appointmentId")
     private Appointment appointment;
 
-    @JsonIgnore
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "employerId")
     private Employer employer;
 }

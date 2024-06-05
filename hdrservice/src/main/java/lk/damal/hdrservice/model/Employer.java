@@ -1,17 +1,20 @@
 package lk.damal.hdrservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.internal.build.AllowNonPortable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllowNonPortable
+@AllArgsConstructor
 @Entity
 public class Employer implements Serializable {
     @Id
@@ -28,7 +31,8 @@ public class Employer implements Serializable {
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private ServiceData serviceData;
+    @JsonIgnore
+    @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ServiceData> serviceData = new ArrayList<>();
+
 }

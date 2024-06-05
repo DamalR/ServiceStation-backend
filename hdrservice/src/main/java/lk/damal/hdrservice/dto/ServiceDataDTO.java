@@ -13,11 +13,9 @@ public class ServiceDataDTO {
     private long serviceId;
     private String startedTime;
     private String finishedTime;
-    private double additionalCharges;
     private String status;
     private String vehicleColor;
     private String vehicleModel;
-    private String vehicleDamages;
     private String vehicleManufacture;
     private String vehicleNumber;
     private String vehicleType;
