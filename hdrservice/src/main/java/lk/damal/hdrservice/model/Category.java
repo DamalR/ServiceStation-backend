@@ -21,9 +21,10 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long categoryId;
     String category;
+    String vehicleType;
     double charges;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Service> services = new ArrayList<>();
+    private List<ServiceData> serviceData = new ArrayList<>();
 }

@@ -12,5 +12,6 @@ import lombok.Setter;
 public class CategoryDTO {
     Long categoryId;
     String category;
+    String vehicleType;
     double charges;
 }

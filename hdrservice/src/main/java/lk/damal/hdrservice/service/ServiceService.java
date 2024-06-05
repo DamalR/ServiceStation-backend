@@ -1,8 +1,8 @@
 package lk.damal.hdrservice.service;
 
 import lk.damal.hdrservice.dto.ResponseDTO;
-import lk.damal.hdrservice.dto.ServiceDTO;
+import lk.damal.hdrservice.dto.ServiceDataDTO;
 
 public interface ServiceService {
-    public ResponseDTO newService(ServiceDTO serviceDTO);
+    public ResponseDTO takeService(ServiceDataDTO serviceDataDTO);
 }

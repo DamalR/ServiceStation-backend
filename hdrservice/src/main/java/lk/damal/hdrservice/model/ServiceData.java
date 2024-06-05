@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Service implements Serializable {
+public class ServiceData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long serviceId;

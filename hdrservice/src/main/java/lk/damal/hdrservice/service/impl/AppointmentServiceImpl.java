@@ -8,6 +8,7 @@ import lk.damal.hdrservice.model.Appointment;
 import lk.damal.hdrservice.model.Customer;
 import lk.damal.hdrservice.model.Vehicle;
 import lk.damal.hdrservice.repository.AppointmentRepository;
+import lk.damal.hdrservice.repository.CategoryRepository;
 import lk.damal.hdrservice.repository.CustomerRepository;
 import lk.damal.hdrservice.repository.VehicleRepository;
 import lk.damal.hdrservice.service.AppointmentService;
@@ -30,10 +31,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private CustomerService customerService;
+    private VehicleRepository vehicleRepository;
 
     @Autowired
-    private VehicleRepository vehicleRepository;
+    private CustomerService customerService;
 
     @Autowired
     private VehicleService vehicleService;
@@ -127,6 +128,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 appointment.setStatus(status);
                 appointment.setVehicle(vehicle);
                 appointment.setCustomer(customer);
+                appointment.setStatus("Pending");
 
                 appointmentRepository.save(appointment);
 
@@ -248,6 +250,93 @@ public class AppointmentServiceImpl implements AppointmentService {
                     true,
                     "Fetched te all appointments",
                     appointments
+            );
+        }
+    }
+
+    @Override
+    public ResponseDTO updateAppointmentStatus(AppointmentDTO appointmentDTO, Long appointmentId) {
+        String date = appointmentDTO.getDate();
+        String time = appointmentDTO.getTime();
+        String status = appointmentDTO.getStatus();
+        Long customerId = appointmentDTO.getCustomerId();
+        Long vehicleId = appointmentDTO.getVehicleId();
+
+        Optional<Appointment> appointmentById = appointmentRepository.findById(appointmentId);
+
+        try {
+            if (appointmentById.isPresent()) {
+                try {
+                    if (date.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Appointment date need to update the status"
+                        );
+                    } else if (time.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Appointment time need to update the status"
+                        );
+                    } else if (customerId == 0) {
+                        return new ResponseDTO(
+                                false,
+                                "Customer Id need to update the status"
+                        );
+                    } else if (vehicleId == 0) {
+                        return new ResponseDTO(
+                                false,
+                                "Vehicle Id need to update the status"
+                        );
+                    } else if (status.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "New status need to update the previous status"
+                        );
+                    } else {
+                        Appointment appointment = appointmentById.get();
+
+                        appointment.setDate(date);
+                        appointment.setStatus(status);
+                        appointment.setTime(time);
+                        appointment.setCustomer(appointmentById.get().getCustomer());
+                        appointment.setVehicle(appointmentById.get().getVehicle());
+
+                        appointmentRepository.save(appointment);
+
+                        AppointmentDTO updatedAppointment = new AppointmentDTO();
+
+                        updatedAppointment.setAppointmentId(appointment.getAppointmentId());
+                        updatedAppointment.setDate(appointment.getDate());
+                        updatedAppointment.setTime(appointment.getTime());
+                        updatedAppointment.setStatus(appointment.getStatus());
+                        updatedAppointment.setCustomerId(appointment.getCustomer().getCustomerId());
+                        updatedAppointment.setVehicleId(appointment.getVehicle().getVehicleId());
+
+                        return new ResponseDTO(
+                                true,
+                                "Appointment status was updated successfully!",
+                                updatedAppointment
+                        );
+                    }
+
+                } catch (Exception exception) {
+                    return new ResponseDTO(
+                            false,
+                            "Something went wrong, cannot change appointment data",
+                            exception
+                    );
+                }
+            } else {
+                return new ResponseDTO(
+                        false,
+                        "cannot find any appointment"
+                );
+            }
+        } catch (Exception exception) {
+            return new ResponseDTO(
+                    false,
+                    "Something went wrong, Please try again",
+                    exception
             );
         }
     }

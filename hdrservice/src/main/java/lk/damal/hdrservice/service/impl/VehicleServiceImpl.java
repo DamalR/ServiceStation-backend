@@ -8,6 +8,8 @@ import lk.damal.hdrservice.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VehicleServiceImpl implements VehicleService {
     @Autowired
@@ -55,6 +57,95 @@ public class VehicleServiceImpl implements VehicleService {
             return new ResponseDTO(
                     false,
                     "Cannot place any vehicle!",
+                    exception
+            );
+        }
+    }
+
+    @Override
+    public ResponseDTO updateAppointmentStatus(VehicleDTO vehicleDTO, Long vehicleId) {
+        String color = vehicleDTO.getColor();
+        String damages = vehicleDTO.getDamages();
+        String manufacture = vehicleDTO.getManufacture();
+        String model = vehicleDTO.getModel();
+        String vehicleNumber = vehicleDTO.getVehicleNumber();
+        String vehicleType = vehicleDTO.getVehicleType();
+
+        Optional<Vehicle> vehicleById = vehicleRepository.findById(vehicleId);
+
+        try {
+            if (vehicleById.isPresent()) {
+                try {
+                    if (color.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Vehicle color cannot be null!"
+                        );
+                    } else if (manufacture.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Manufacture cannot be null!"
+                        );
+                    } else if (model.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Model cannot be null!"
+                        );
+                    } else if (vehicleNumber.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Vehicle Number cannot be null!"
+                        );
+                    } else if (vehicleType.equalsIgnoreCase("")) {
+                        return new ResponseDTO(
+                                false,
+                                "Vehicle type cannot be null!"
+                        );
+                    } else {
+
+                        Vehicle vehicle = vehicleById.get();
+
+                        vehicle.setColor(color);
+                        vehicle.setDamages(damages);
+                        vehicle.setManufacture(manufacture);
+                        vehicle.setModel(model);
+                        vehicle.setVehicleNumber(vehicleNumber);
+                        vehicle.setVehicleType(vehicleType);
+
+                        vehicleRepository.save(vehicle);
+
+                        VehicleDTO updatedVehicle = new VehicleDTO();
+
+                        updatedVehicle.setColor(vehicle.getColor());
+                        updatedVehicle.setDamages(vehicle.getDamages());
+                        updatedVehicle.setManufacture(vehicle.getManufacture());
+                        updatedVehicle.setModel(vehicle.getModel());
+                        updatedVehicle.setVehicleNumber(vehicle.getModel());
+                        updatedVehicle.setVehicleType(vehicle.getVehicleType());
+
+                        return new ResponseDTO(
+                                true,
+                                "Vehicle detail has updated successfully!",
+                                updatedVehicle
+                        );
+                    }
+                } catch (Exception exception) {
+                    return new ResponseDTO(
+                            false,
+                            "Something went wrong, vehicle can not update!",
+                            exception
+                    );
+                }
+            } else {
+                return new ResponseDTO(
+                        false,
+                        "Vehicle not found to update!"
+                );
+            }
+        } catch (Exception exception) {
+            return new ResponseDTO(
+                    false,
+                    "Something went wrong, please try again",
                     exception
             );
         }

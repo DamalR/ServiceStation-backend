@@ -31,5 +31,5 @@ public class Appointment implements Serializable {
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Service service;
+    private ServiceData serviceData;
 }

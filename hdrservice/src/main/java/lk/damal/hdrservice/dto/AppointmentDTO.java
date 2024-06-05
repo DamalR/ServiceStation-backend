@@ -21,4 +21,12 @@ public class AppointmentDTO {
     private String vehicleType;
     private Long customerId;
     private Long vehicleId;
+
+    public AppointmentDTO(String date, String time, String status, Long customerId, Long vehicleId) {
+        this.date = date;
+        this.time = time;
+        this.status = status;
+        this.customerId = customerId;
+        this.vehicleId = vehicleId;
+    }
 }

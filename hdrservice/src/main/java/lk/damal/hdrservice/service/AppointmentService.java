@@ -7,4 +7,5 @@ public interface AppointmentService {
     public ResponseDTO newAppointment(AppointmentDTO appointmentDTO);
     public ResponseDTO cancelAppointment(Long appointmentId);
     public ResponseDTO getAllAppointments();
+    public ResponseDTO updateAppointmentStatus(AppointmentDTO appointmentDTO, Long appointmentId);
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceDTO {
+public class ServiceDataDTO {
     private long serviceId;
     private String startedTime;
     private String finishedTime;
@@ -18,7 +18,12 @@ public class ServiceDTO {
     private String vehicleColor;
     private String vehicleModel;
     private String vehicleDamages;
+    private String vehicleManufacture;
+    private String vehicleNumber;
+    private String vehicleType;
     private long categoryId;
     private long appointmentId;
     private long employerId;
+    private long customerId;
+    private long vehicleId;
 }

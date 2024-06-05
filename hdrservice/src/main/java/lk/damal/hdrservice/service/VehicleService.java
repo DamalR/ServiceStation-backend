@@ -5,4 +5,5 @@ import lk.damal.hdrservice.dto.VehicleDTO;
 
 public interface VehicleService {
     public ResponseDTO newVehicle(VehicleDTO vehicleDTO);
+    public ResponseDTO updateAppointmentStatus(VehicleDTO vehicleDTO, Long vehicleId);
 }
