@@ -5,5 +5,4 @@ import lk.damal.hdrservice.dto.ResponseDTO;
 
 public interface InvoiceService {
     public ResponseDTO printInvoice(InvoiceDTO invoiceDTO);
-    public ResponseDTO getCompletedService();
 }

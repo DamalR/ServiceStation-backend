@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -326,6 +328,47 @@ public class ServiceServiceImpl implements ServiceService {
             return new ResponseDTO(
                     false,
                     "Cannot found any service record!"
+            );
+        }
+    }
+
+    @Override
+    public ResponseDTO getCompletedService(String status) {
+        List<ServiceData> serviceDataByStatus = serviceRepository.findServiceDataByStatus(status);
+
+        if (serviceDataByStatus.isEmpty()) {
+            return new ResponseDTO(
+                    false,
+                    "Finished or Returned service records are not found!"
+            );
+        } else {
+            ArrayList<ServiceDataDTO> serviceDataList = new ArrayList<>();
+
+            for (ServiceData serviceData : serviceDataByStatus) {
+
+                ServiceDataDTO serviceDataDTO = new ServiceDataDTO();
+
+                serviceDataDTO.setServiceId(serviceData.getServiceId());
+                serviceDataDTO.setFinishedTime(serviceData.getFinishedTime());
+                serviceDataDTO.setStartedTime(serviceData.getStartedTime());
+                serviceDataDTO.setStatus(serviceData.getStatus());
+                serviceDataDTO.setCategoryId(serviceData.getCategory().getCategoryId());
+                serviceDataDTO.setAppointmentId(serviceData.getAppointment().getAppointmentId());
+                serviceDataDTO.setEmployerId(serviceData.getEmployer().getEmployerId());
+                serviceDataDTO.setVehicleColor(serviceData.getAppointment().getVehicle().getColor());
+                serviceDataDTO.setVehicleModel(serviceData.getAppointment().getVehicle().getModel());
+                serviceDataDTO.setVehicleManufacture(serviceData.getAppointment().getVehicle().getManufacture());
+                serviceDataDTO.setVehicleModel(serviceData.getAppointment().getVehicle().getModel());
+                serviceDataDTO.setVehicleType(serviceData.getAppointment().getVehicle().getVehicleType());
+                serviceDataDTO.setCustomerId(serviceData.getAppointment().getCustomer().getCustomerId());
+                serviceDataDTO.setVehicleId(serviceData.getAppointment().getVehicle().getVehicleId());
+
+                serviceDataList.add(serviceDataDTO);
+            }
+            return new ResponseDTO(
+                    true,
+                    "All " + status + " service data are fetched!",
+                    serviceDataList
             );
         }
     }

@@ -26,4 +26,9 @@ public class ServiceController {
     public ResponseDTO returnService(@RequestBody ServiceDataDTO serviceDataDTO, @RequestParam("serviceId") Long serviceId) {
         return serviceService.returnService(serviceDataDTO, serviceId);
     }
+
+    @GetMapping("/completed")
+    public ResponseDTO getCompletedService(@RequestParam("status") String status) {
+        return serviceService.getCompletedService(status);
+    }
 }

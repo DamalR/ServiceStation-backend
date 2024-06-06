@@ -188,9 +188,4 @@ public class InvoiceServiceImpl implements InvoiceService {
             );
         }
     }
-
-    @Override
-    public ResponseDTO getCompletedService() {
-        return null;
-    }
 }
