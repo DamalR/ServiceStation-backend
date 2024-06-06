@@ -21,8 +21,9 @@ public class InvoiceDTO {
     private double usedOilLiters;
     private double usedOilPrice;
     private String serviceDate;
-    private String grossAmount;
+    private double grossAmount;
     private double discountAmount;
     private double netAmount;
     private long serviceId;
+    private String paymentMethod;
 }

@@ -23,9 +23,6 @@ public class VehicleServiceImpl implements VehicleService {
         String vehicleNumber = vehicleDTO.getVehicleNumber();
         String manufacture = vehicleDTO.getManufacture();
         String vehicleType = vehicleDTO.getVehicleType();
-        System.out.println(vehicleNumber);
-        System.out.println(manufacture);
-        System.out.println(vehicleType);
 
         try {
             if (vehicleNumber.equalsIgnoreCase("")) {

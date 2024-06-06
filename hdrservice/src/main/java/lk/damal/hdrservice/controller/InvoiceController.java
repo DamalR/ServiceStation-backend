@@ -16,8 +16,8 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
-//    @PostMapping("/print")
-//    public ResponseDTO printInvoice(@RequestBody InvoiceDTO invoiceDTO) {
-//        return invoiceService
-//    }
+    @PostMapping("/print")
+    public ResponseDTO printInvoice(@RequestBody InvoiceDTO invoiceDTO) {
+        return invoiceService.printInvoice(invoiceDTO);
+    }
 }
