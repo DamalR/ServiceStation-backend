@@ -35,14 +35,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private VehicleService vehicleService;
-
-    @Override
     @Transactional
+    @Override
     public ResponseDTO newAppointment(AppointmentDTO appointmentDTO) {
 
         String date = LocalDate.now(ZoneId.of("GMT+02:30")).toString();
@@ -154,14 +148,21 @@ public class AppointmentServiceImpl implements AppointmentService {
                         savedAppointment
                 );
             } catch (Exception exception) {
-                return new ResponseDTO(
-                        false,
-                        "Cannot make this appointment",
-                        exception
-                );
+                throw exception;
+//                return new ResponseDTO(
+//                        false,
+//                        "Cannot make this appointment",
+//                        exception
+//                );
             }
         }
     }
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private VehicleService vehicleService;
 
     @Override
     public ResponseDTO cancelAppointment(Long appointmentId) {
