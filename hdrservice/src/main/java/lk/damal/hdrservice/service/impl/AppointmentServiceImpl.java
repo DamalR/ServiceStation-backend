@@ -148,12 +148,11 @@ public class AppointmentServiceImpl implements AppointmentService {
                         savedAppointment
                 );
             } catch (Exception exception) {
-                throw exception;
-//                return new ResponseDTO(
-//                        false,
-//                        "Cannot make this appointment",
-//                        exception
-//                );
+                return new ResponseDTO(
+                        false,
+                        "Cannot make this appointment",
+                        exception
+                );
             }
         }
     }

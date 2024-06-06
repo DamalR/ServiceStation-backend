@@ -1,14 +1,19 @@
 package lk.damal.hdrservice.service.impl;
 
+import lk.damal.hdrservice.dto.AppointmentDTO;
 import lk.damal.hdrservice.dto.InvoiceDTO;
 import lk.damal.hdrservice.dto.ResponseDTO;
+import lk.damal.hdrservice.model.Appointment;
 import lk.damal.hdrservice.model.Invoice;
 import lk.damal.hdrservice.model.ServiceData;
+import lk.damal.hdrservice.repository.AppointmentRepository;
 import lk.damal.hdrservice.repository.InvoiceRepository;
 import lk.damal.hdrservice.repository.ServiceRepository;
+import lk.damal.hdrservice.service.AppointmentService;
 import lk.damal.hdrservice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,7 +26,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private ServiceRepository serviceRepository;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
     @Override
+    @Transactional
     public ResponseDTO printInvoice(InvoiceDTO invoiceDTO) {
 
         long serviceId = invoiceDTO.getServiceId();
@@ -101,6 +110,19 @@ public class InvoiceServiceImpl implements InvoiceService {
                     );
                 } else {
                     try {
+//                        update appointment status
+
+                        AppointmentDTO appointmentDTO = new AppointmentDTO();
+
+                        appointmentDTO.setDate(serviceById.get().getAppointment().getDate());
+                        appointmentDTO.setTime(serviceById.get().getAppointment().getTime());
+                        appointmentDTO.setStatus("Done");
+                        appointmentDTO.setCustomerId(serviceById.get().getAppointment().getCustomer().getCustomerId());
+                        appointmentDTO.setVehicleId(serviceById.get().getAppointment().getVehicle().getVehicleId());
+
+                        appointmentService.updateAppointmentStatus(appointmentDTO, serviceById.get().getAppointment().getAppointmentId());
+
+//                        invoice print transaction
                         Invoice invoice = new Invoice();
 
                         invoice.setInvoiceNumber(invoiceNumber);
@@ -165,5 +187,10 @@ public class InvoiceServiceImpl implements InvoiceService {
                     "Cannot provide invoice without service data!"
             );
         }
+    }
+
+    @Override
+    public ResponseDTO getCompletedService() {
+        return null;
     }
 }
