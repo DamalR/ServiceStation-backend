@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1.0/appointment")
 public class AppointmentController {
+
     @Autowired
     private AppointmentService appointmentService;
 
